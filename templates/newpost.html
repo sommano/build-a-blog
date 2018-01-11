@@ -2,7 +2,33 @@
 
 {% block content %}
 
-<h1>Add a Blog Entry</h1>
+    <h1>Add a Blog Entry</h1>
+    <form method="POST">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="blogtitle">Title for your new blog:</label></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input name="blogtitle" type = "text" class = "blogtitle"/>
+                        <span class="error">blogtitle_error</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+        <label for="blogtext">Your new Blog:</label>
+        <p>
+        <input name="blogtext" type = "textarea" class="blogtext" />
+        <span class="error">blogtext_error</span>
+
+        <p>
+        <td><input type="submit" value ="Add Entry"/>
+
+    </form>
 
 
 {% endblock %}

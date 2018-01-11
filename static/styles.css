@@ -25,3 +25,13 @@ a:active {
     background-color: transparent;
     text-decoration: underline;
 }
+
+.blogtext {
+    width: 400px;
+    height: 100px;
+}
+
+.blogtitle {
+    width: 400px;
+    height: 20px;
+}
