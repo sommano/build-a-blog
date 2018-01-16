@@ -1,5 +1,6 @@
-from flask import Flask, request, redirect,render_template
+from flask import Flask, request, redirect,render_template, flash
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import cgi
 import os
 
@@ -13,6 +14,7 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(120))
     body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime(), default=datetime.utcnow, index=True)
 
     def __init__(self, title, body):
         self.title = title
@@ -46,19 +48,16 @@ def validate():
 
     if blogtitle == "":
         blogtitle_error = "The blog title cannot be blank"
-    else:
-        blogtitle_error = ""
-
+        return render_template("newpost.html", blogtitle=blogtitle, blogbody=blogbody, blogtitle_error = blogtitle_error, blogbody_error = blogbody_error)
+#
     if blogbody == "":
         blogbody_error = "The blog text must contain an entry"
-    else:
-        blogbody_error = ""
-
-    if blogtitle_error or blogbody_error:
-        render_template("newpost.html", blogtitle = blogtitle, blogbody = blogbody, blogtitle_error = blogtitle_error, blogbody_error = blogbody_error)
+        return render_template("newpost.html", blogtitle=blogtitle, blogbody=blogbody, blogtitle_error = blogtitle_error, blogbody_error = blogbody_error)
+#
     elif request.method == "POST":
         newpost = Blog(blogtitle, blogbody)
         db.session.add(newpost)
+        db.session.flush()
         db.session.commit()
 
     currentid = newpost.id
